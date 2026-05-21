@@ -57,4 +57,16 @@ public class OrderCreated {
     public void setSide(OrderSide side){
         this.side = side;
     }
+
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
+
+    public void setType(OrderType orderType){
+        this.orderType = orderType;
+    }
+
+    public void setTimeStamp(Instant timestamp){
+        this.timestamp = timestamp;
+    }
 }
