@@ -17,6 +17,22 @@ public class CreateOrderRequest {
         this.side = side;
         this.quantity = quantity;
     }
+
+    public UUID getUserID(){
+        return userID;
+    }
+
+    public String getSymbol(){
+        return symbol;
+    }
+
+    public OrderSide getSide(){
+        return side;
+    }
+
+    public int getQuantity(){
+        return quantity;
+    }
 }
 
 
