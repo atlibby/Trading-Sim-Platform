@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: market-data-simulator
+  
+  kafka:
+  bootstrap-servers: localhost:9092
+  producer:
+    key-stabilizer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  
+server:
+  port: 8081
+
+trading:
+  symbols:
+    - AAPL
+    - NVDA
+    - BIV
+    - VOO
+    - VGX
