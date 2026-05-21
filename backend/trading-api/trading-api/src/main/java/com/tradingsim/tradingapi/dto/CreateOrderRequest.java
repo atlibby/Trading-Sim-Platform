@@ -33,6 +33,14 @@ public class CreateOrderRequest {
     public int getQuantity(){
         return quantity;
     }
+
+    public void setSide(OrderSide side){
+        this.side = side;
+    }
+
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+    }
 }
 
 
