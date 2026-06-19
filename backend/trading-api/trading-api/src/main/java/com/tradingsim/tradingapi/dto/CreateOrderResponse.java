@@ -27,6 +27,10 @@ public class CreateOrderResponse {
         return message;
     }
 
+    public void setOrderID(UUID orderID){
+        this.orderID = orderID;
+    }
+
     public void setStatus(String status){
         this.status = status;
     }
