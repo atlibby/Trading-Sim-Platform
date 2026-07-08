@@ -9,11 +9,12 @@ import com.tradingsim.tradingapi.events.OrderCreated;
 public class OrderPublisherService {
     private final KafkaTemplate<String, OrderCreated> kafkaTemplate;
 
-    public OrderPublisherService(KafkaTemplate<String, OrderCreated> kafkaTemplate, OrderCreated event){
+    public OrderPublisherService(KafkaTemplate<String, OrderCreated> kafkaTemplate){
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void publishOrderCreated(OrderCreated event){
+    public void publishOrderCreated(){
+        OrderCreated event = new OrderCreated();
         String key = event.getOrderID().toString();
         kafkaTemplate.send("orders.created", key, event);
         System.out.println("Published order: " + event.getSymbol() + " " + event.getUserID());
