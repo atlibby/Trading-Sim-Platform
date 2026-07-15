@@ -13,8 +13,7 @@ public class OrderPublisherService {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void publishOrderCreated(){
-        OrderCreated event = new OrderCreated();
+    public void publishOrderCreated(OrderCreated event){
         String key = event.getOrderID().toString();
         kafkaTemplate.send("orders.created", key, event);
         System.out.println("Published order: " + event.getSymbol() + " " + event.getUserID());
