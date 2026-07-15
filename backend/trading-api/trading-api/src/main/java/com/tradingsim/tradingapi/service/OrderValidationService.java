@@ -1,15 +1,9 @@
 package com.tradingsim.tradingapi.service;
-import com.tradingsim.tradingapi.dto.CreateOrderRequest;
-import com.tradingsim.tradingapi.dto.CreateOrderResponse;
-import com.tradingsim.tradingapi.model.OrderSide;
 import java.util.List;
-import java.util.UUID;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import com.tradingsim.tradingapi.dto.CreateOrderRequest;
 
 //*
 // Goal
@@ -19,39 +13,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class OrderValidationService {
-    private CreateOrderRequest request;
     private final List<String> SUPPORTED_SYMBOLS = List.of("AAPL", "NVDA", "BIV", "VOO", "VGX");
 
-    public OrderValidationService(CreateOrderRequest request){
-        this.request = request;
-    }
+        public void validateRequest(CreateOrderRequest request){
+        String symbol = request.getSymbol();
 
-    @GetMapping("/request")
-    public ResponseEntity<CreateOrderResponse> validateRequest(@RequestParam("quantity") int quantity, @RequestParam("userID") UUID userID, @RequestParam("side") OrderSide side){
-        CreateOrderResponse response = new CreateOrderResponse();
+        if (symbol == null || symbol.isBlank()){
+            throw new IllegalArgumentException("Order must include symbol");
+        }
 
-        response.setStatus("Order placed");
-        response.setMessage("Info: " + request);
+        String normalizedSymbol = symbol.trim().toUpperCase();
+
+        if (!SUPPORTED_SYMBOLS.contains(normalizedSymbol)){
+            throw new IllegalArgumentException("Symbol must be of existing stock");
+        }
+
+        if (request.getQuantity() <= 0){
+            throw new IllegalArgumentException("Quantity must be greater than 0");
+        }
+
+        if (request.getUserID() == null){
+            throw new IllegalArgumentException("User ID must be included in order");
+        }
+
+        if (request.getSide() == null){
+            throw new IllegalArgumentException("Side (BUY/SELL) must be included in order");
+        }
         
-        if (quantity <= 0){
-            response.setStatus("Error");
-            response.setMessage("Quantity must be greater than 0");
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
-
-        if (userID == null){
-            response.setStatus("Error");
-            response.setMessage("User ID is required");
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
-
-        if (side == null){
-            response.setStatus("Error");
-            response.setMessage("Order side required");
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-
     }
 }
