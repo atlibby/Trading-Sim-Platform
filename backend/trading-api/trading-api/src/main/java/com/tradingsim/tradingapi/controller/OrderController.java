@@ -77,7 +77,7 @@ public class OrderController {
             // return 400
             CreateOrderResponse errorResponse = new CreateOrderResponse(null, "Failure", e.getMessage());
 
-            return ResponseEntity.ok().body(errorResponse);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
     
