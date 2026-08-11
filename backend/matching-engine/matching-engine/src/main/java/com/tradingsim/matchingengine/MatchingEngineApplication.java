@@ -1,6 +1,6 @@
-package com.tradingsim;
+package com.tradingsim.matchingengine;
 
-public class Main {
+public class MatchingEngineApplication {
     public static void main(String[] args) {
         System.out.println("Hello world!");
     }
